@@ -1,0 +1,13 @@
+#query-table {
+  display: flex;
+  justify-content: center;
+}
+
+tbody td {
+  border: 1px solid white;
+  padding: 10px;
+}
+
+tbody tr {
+  margin: 100px;
+}
