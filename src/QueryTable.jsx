@@ -1,4 +1,4 @@
-import "./querytable.css";
+import "./style/querytable.css";
 
 export default function QueryTable({ queries }) {
   return (
