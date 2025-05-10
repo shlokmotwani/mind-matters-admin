@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 import jwt from "jsonwebtoken";
-const SECRET_KEY = "mind-matters";
 const app = express();
 import dotenv from "dotenv";
 dotenv.config();
+const SECRET_KEY = process.env.SECRET_KEY;
 const PORT = process.env.BACKEND_PORT;
 
 app.use(express.json());
