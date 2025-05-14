@@ -1,22 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchLocalToken, removeLocalToken } from "../localDB.js";
-
-function onLogOut() {
-  removeLocalToken();
-  window.location.href = "/";
-}
+import { useEffect } from "react";
 
 export default function Home() {
-  const token = fetchLocalToken();
-  if (!token) {
-    window.location.href = "/";
-    return;
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = fetchLocalToken();
+    if (!token) {
+      navigate("/");
+      return;
+    }
+  }, [navigate]);
+
+  const handleLogOut = () => {
+    removeLocalToken();
+    navigate("/");
+  };
+
   return (
     <div>
       <h1>Dashboard</h1>
       <Link to="/queries">Queries</Link>
-      <button onClick={onLogOut}>Log Out</button>
+      <button onClick={handleLogOut}>Log Out</button>
     </div>
   );
 }
