@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
+import { fetchLocalToken, removeLocalToken } from "../localDB.js";
 
-const LOCAL_STORAGE_TOKEN_VARIABLE_NAME = import.meta.env
-  .VITE_LOCAL_STORAGE_TOKEN_VARIABLE;
+function onLogOut() {
+  removeLocalToken();
+  window.location.href = "/";
+}
 
 export default function Home() {
-  function onLogOut() {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_VARIABLE_NAME);
-    window.location.href = "/";
-  }
-  const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_VARIABLE_NAME);
+  const token = fetchLocalToken();
   if (!token) {
     window.location.href = "/";
     return;

@@ -1,7 +1,6 @@
-import "./style/login.css";
+import { assignLocalToken, fetchLocalToken } from "../localDB.js";
+import "../style/login.css";
 const VERIFY_USER_URL = import.meta.env.VITE_VERIFY_USER_URL;
-const LOCAL_STORAGE_TOKEN_VARIABLE_NAME = import.meta.env
-  .VITE_LOCAL_STORAGE_TOKEN_VARIABLE;
 
 export default function Login() {
   async function onSubmit(e) {
@@ -18,10 +17,12 @@ export default function Login() {
         password,
       }),
     });
+
     //TODO: Check for successful login
     if (response.status === 200) {
-      localStorage.setItem(LOCAL_STORAGE_TOKEN_VARIABLE_NAME, response.token);
-      window.location.href = "/";
+      const responseJSON = await response.json();
+      assignLocalToken(responseJSON.token);
+      window.location.href = "/home";
     } else if (response.status === 401) {
       alert("You are not authorized.");
     } else {
@@ -29,11 +30,12 @@ export default function Login() {
     }
   }
 
-  const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_VARIABLE_NAME);
+  const token = fetchLocalToken();
   if (token) {
     window.location.href = "/home";
     return;
   }
+
   return (
     <div id="login-outer">
       <h1>Mind Matters (admin)</h1>
